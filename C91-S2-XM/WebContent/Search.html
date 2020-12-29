@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <script src="res/push.js"></script>
 <script type="text/javascript">
 if(/Android|webOS|iPhone|iPod|iPad|Windows Phone|BlackBerry|Mobile/i.test(navigator.userAgent)) {var url = window.location.pathname+window.location.search;window.location.href = 'https://m.sq688.com'+url;}
@@ -36,67 +37,18 @@ if(/Android|webOS|iPhone|iPod|iPad|Windows Phone|BlackBerry|Mobile/i.test(naviga
 	</div>
 	<div class="detail">
 		<div class="swarp">
-			<!--left-->
-			<div class="slt">
-				<div class="head" style="margin-top: 20px">
-					<i class="leline"></i>最近更新
-				</div>
-				<ul class="songhot">
-					<li v-for="s in listzjsl">
-					<a :href="'detail2.html#'+s.singer">{{s.name}}
-					<span>{{s.singer}}</span></a>
-					</li>
-					
-				</ul>
-
-				<div class="head" style="margin-top: 20px">
-					<i class="leline"></i>最新收录歌手
-				</div>
-				<ul class="sigerlike">
-					<li v-for="s in listzjgx">
-					<a :href="'detail2.html#'+s.name">
-					<img :src="'/C91-S2-XM'+s.head">
-							<p>{{s.name}}</p>
-						</a>
-					</li>
-					
-				</ul>
-				<div class="clear"></div>
-			</div>
+			
 
 			<!--right-->
 			<div class="srt">
-				<div class="ww">
-					<div id="details" class="avt">
-						<img :src="'/C91-S2-XM'+list[0].head"  class="avt ">
-						<div class="good">
-							<a href="javascript:void(0);" title="喜欢"><i class="fa fa-heart"></i> <span id="like">{{list[0].likes}}</span></a> 
-							<a title="歌曲" class="rt"><i class="fa fa-music"></i> {{list[0].total}}</a>
-						</div>
-					</div>
-					<div class="det">
-						<h2>{{list[0].name}}</h2>
-						<p>
-							<span>分类:{{list[0].category}}</span>
-						</p>
-						<p>
-							<span>地区:{{list[0].nation}}</span>
-						</p>
-						<p>
-							<span>出生:{{list[0].birthday}}</span>
-						</p>
-						<p>
-							<span>简介:</span>
-						</p>
-						<p class="des">{{list[0].intro}}</p>
-					</div>
-
-					<div class="clear"></div>
-				</div>
+				
 
 				<div class="song">
-					<div class="head">
-						<i class="leline"></i>{{list[0].name}} 无损歌曲列表 (陆续收集中)
+					<div class="head" >
+						<i  class="leline"></i>搜索{{info}} 无损歌曲列表 (陆续收集中)
+					</div>
+					<div class="head" v-show="location.hash.substring(1)==list[0].singer">
+						<i  class="leline"></i>{{list[0].singer}} 无损歌曲列表 (陆续收集中)
 					</div>
 					<table class="songlist" border="0" cellpadding="0" cellspacing="0">
 						<tbody>
@@ -109,12 +61,14 @@ if(/Android|webOS|iPhone|iPod|iPad|Windows Phone|BlackBerry|Mobile/i.test(naviga
 								<th>收录</th>
 								<th>操作</th>
 							</tr>
-							<tr v-for="s in listsong">
+							<tr v-for="s in list">
 								<td style="padding-left: 8px;">
 									<a :href=" 'download.html?name='+(s.singer)+'#'+s.name" 
 									target="_blank" class="st">{{s.name}}</a>
 								</td>
-								<td>{{s.singer}}</td>
+								<td >
+								<a :href=" 'detail.html#'+(s.singer)" 
+									target="_blank" class="st">{{s.singer}}</a></td>
 								<td>
 									<span class="songstype">{{s.type}}</span>
 								</td>
@@ -129,56 +83,9 @@ if(/Android|webOS|iPhone|iPod|iPad|Windows Phone|BlackBerry|Mobile/i.test(naviga
 						</tbody>
 					</table>
 					<input type="hidden" id="id" value="3">
-				</div>
-
-
-
-				<!--相关专辑-->
-
-				
-				
-
-				<div class="song">
-					<div class="head">
-						<i class="leline"></i>网友评论
-					</div>
-					<form action="" id="ly">
-					<div id="comment" class="comment">
-						<div class="nickname">
-							<input v-model="name" id="nickname" type="text" placeholder="请填写您的昵称" max-length="25">
-						</div>
-						<div class="message">
-							<textarea v-model="content" id="message" placeholder="请填写您的评论"></textarea>
-							<input id="sid" type="hidden" value="3">
-						</div>
-						<button @click="ly()" type="button"  >发表评论</button>
-					</div>
-					</form>
-					
-					<template >
-					<div class="comment-list" v-for="s in listly">
-						<div class="items">
-							<div class="i-left">
-								<div class="avt2"></div>
-								<h3>{{s.name}}</h3>
-							</div>
-							<div class="i-right">
-								<h4>发表于{{s.ly_time}}</h4>
-								<div class="msg">{{s.content}}</div>
-							</div>
-						</div>
-		
-					</div>
-					</template>
-				
-				</div>
+				</div>			
 			</div>
-		
-		
-		
-		</div>
-		
-		
+		</div>	
 		<div class="clear"></div>
 	</div>
 	<script type="text/javascript">
@@ -186,55 +93,15 @@ if(/Android|webOS|iPhone|iPod|iPad|Windows Phone|BlackBerry|Mobile/i.test(naviga
 		el:".detail",
 		data:{
 			list:[],
-			listsong:[],
-			listzjsl:[],
-			listzjgx:[],
-			listly:[],
-			name:"",
-			content:""
+			info:"",
 		},
 		created(){
-			 var t = this;
-		      document.onkeydown = function(e){
-		        if(window.event == undefined){
-		          var key = e.keyCode;
-		        }else{
-		          var key = window.event.keyCode;
-		        }
-		      //enter的ASCII码是13
-		        if(key == 13){
-		          t.ly();
-		        }
-		      }
-			axios.get("detail.s?op=querydetail&name="+location.hash.substring(1))
-			.then(res=>{
+			this.info=location.hash.substring(1);
+			axios.get("detail.s?op=querySearchlist&name="+this.info).then(res=>{
 				this.list=res.data;
-			});
-			axios.get("detail.s?op=querysongs&name="+location.hash.substring(1))
-			.then(res=>{
-				this.listsong=res.data;
-			});
-			axios.get("detail.s?op=queryzjsl").then(res=>{
-				this.listzjsl=res.data;
-			});
-			axios.get("detail.s?op=queryzjgx").then(res=>{
-				this.listzjgx=res.data;
-			});
-			axios.get("detail.s?op=queryly").then(res=>{
-				this.listly=res.data;
-			});
+			})
 			
-		},
-		methods:{
-			ly(){
-				var p=new URLSearchParams();
-				p.append("name",this.name);
-				p.append("content",this.content);
-				axios.post("detail.s?op=addly",p).then(res=>{
-					alert(res.data);
-					location.href= 'detail2.html#'+location.hash.substring(1);
-				});
-			}
+			
 		}
 		
 	});
