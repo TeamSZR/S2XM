@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="res/push.js"></script>
 <script type="text/javascript">
@@ -14,7 +16,7 @@
 <meta name="applicable-device" content="pc">
 <meta name="mobile-agent" content="format=html5;url=https://m.sq688.com/share_item/464985.html">
 <link rel="alternate" media="only screen and(max-width: 800px)" href="https://m.sq688.com/share_item/464985.html">
-<title>阿良良木健、洛天依专辑《洛天依作品2号：L》下载_无损音乐下载_FLAC_APE_WAV_DSD_SQ688_超高无损音乐</title>
+<title>网友分享下载_无损音乐下载_FLAC_APE_WAV_DSD_SQ688_超高无损音乐</title>
 <meta name="keywords" content="阿良良木健、洛天依,专辑,洛天依作品2号：L,FLAC">
 <meta name="description" content="超高无损音乐网SQ688.Com收录大量无损音乐免费下载,提供华语男歌手,华语女歌手,华语乐队,专辑合集,欧美歌手等FLAC,WAV,DSD,APE格式无损音乐免费下载">
 <link rel="stylesheet" type="text/css" href="res/main.css">
@@ -27,18 +29,7 @@
 				<h1>超高无损音乐</h1>
 				<p>SQ688.com</p>
 			</div>
-			<ul class="menu">
-				<li><a href="https://www.sq688.com/">首页</a></li>
-				<li><a href="https://www.sq688.com/singer/10001.html">华语男歌手</a></li>
-				<li><a href="https://www.sq688.com/singer/10002.html">华语女歌手</a></li>
-				<li><a href="https://www.sq688.com/singer/10003.html">华语乐队</a></li>
-				<li><a href="https://www.sq688.com/singer/10005.html">欧美歌手</a></li>
-				<li><a href="https://www.sq688.com/singer/10006.html">日韩歌手</a></li>
-				<li><a href="https://www.sq688.com/singer/10004.html">专辑合集</a></li>
-				<li><a href="https://www.sq688.com/share.html" class="cur">网友分享</a></li>
-				<li><a href="https://www.sq688.com/yx/">安卓游戏</a></li>
-				<li><a href="https://www.sq688.com/software/">安卓软件</a></li>
-			</ul>
+			
 			<div class="users">
 				<a href="https://www.sq688.com/login"><i class="fa fa-sign-in"></i> 登录</a> / <a href="https://www.sq688.com/register"><i class="fa fa-registered"></i> 注册</a>
 			</div>
@@ -53,7 +44,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="detail">
+	
+	<div class="detail" id="main">
 		<div class="swarp">
 			<div class="slt">
 				<div class="head" style="margin-top: 20px">
@@ -79,18 +71,12 @@
 					<i class="leline"></i>分享排行
 				</div>
 				<ul class="share-rank">
-					<li><span class="rank top">1</span> <img src="res/48.jpg"> <span class="nickname">飞越</span> <span class="total">112</span></li>
-					<li><span class="rank top">2</span> <img src="res/52.jpg"> <span class="nickname">31i音乐</span> <span class="total">96</span></li>
-					<li><span class="rank top">3</span> <img src="res/9.jpg"> <span class="nickname">i小鹿</span> <span class="total">92</span></li>
-					<li><span class="rank ">4</span> <img src="res/50.jpg"> <span class="nickname">五郎</span> <span class="total">76</span></li>
-					<li><span class="rank ">5</span> <img src="res/48.jpg"> <span class="nickname">yrcccp</span> <span class="total">51</span></li>
-					<li><span class="rank ">6</span> <img src="res/8.jpg"> <span class="nickname">sss</span> <span class="total">50</span></li>
-					<li><span class="rank ">7</span> <img src="res/27.jpg"> <span class="nickname">ys</span> <span class="total">48</span></li>
-					<li><span class="rank ">8</span> <img src="res/1.jpg"> <span class="nickname">余落</span> <span class="total">44</span></li>
-					<li><span class="rank ">9</span> <img src="res/60.jpg"> <span class="nickname">Mediary</span> <span class="total">40</span></li>
-					<li><span class="rank ">10</span> <img src="res/15.jpg"> <span class="nickname">阿赖耶灬识</span> <span class="total">38</span></li>
+					<li v-for="(m,i) in listph"><span class="rank top">{{i+1}}</span> 
+					<img :src="m.head"> <span class="nickname">{{m.name}}</span> 
+					<span class="total">{{m.cnt}}</span>
+					</li>
+					
 				</ul>
-
 				<div class="clear"></div>
 			</div>
 
@@ -98,35 +84,40 @@
 			<div class="srt">
 				<div class="ww" style="min-height: 140px;">
 					<div class="det" style="margin-left: 0;">
-						<h2>[专辑/分轨/FLAC]阿良良木健、洛天依 -《洛天依作品2号：L》</h2>
+						<h2>[{{list[0].type}}/
+						{{list[0].src_type}}/
+						{{list[0].format}}]
+						{{list[0].singers}} -《{{list[0].name}}》
+						</h2>
 						<p>
-							<span>分类:</span>专辑
+							<span>分类:</span>{{list[0].type}}
 						</p>
 						<p>
-							<span>类型:</span>分轨
+							<span>类型:</span>{{list[0].src_type}}
 						</p>
 						<p>
-							<span>发布:</span>2020-10-03
+							<span>发布时间:</span>{{list[0].create_time}}
 						</p>
 						<h2>
-							<span class="">WAV</span> <span class="cb">FLAC</span> <span class="">APE</span> <span class="">DSD</span>
+						 <span class="cb">{{list[0].format}}</span> 
 						</h2>
 
 					</div>
 					<div class="det-user">
 						<div class="det-avt">
-							<img src="res/60.jpg">
+							<img :src="list[0].head">
 						</div>
-						<h2>wsad</h2>
+						<h2>{{list[0].member}}</h2>
 						<p>
 							<span>标品</span>
 						</p>
 						<p>
-							<i class="fa fa-diamond"></i> 230
+							<i class="fa fa-diamond"></i> {{list[0].cnt}}
 						</p>
 					</div>
 					<div class="good">
-						<a href="javascript:void(0);" title="喜欢"><i class="fa fa-heart"></i> <span id="like">70</span></a>
+						<a href="javascript:void(0);" title="喜欢">
+						<i class="fa fa-heart"></i> <span id="like">{{list[0].heat}}</span></a>
 					</div>
 					<div class="clear"></div>
 				</div>
@@ -135,13 +126,14 @@
 						<i class="leline"></i>详细介绍
 					</div>
 					<div class="share-des">
-						专辑名：洛天依作品2号：L <br>歌手：阿良良木健、洛天依 <br>发行时间：2017-06-21 <br> <br>简介：「世界遍布着困难&nbsp;而我依然期待&nbsp;生命深处的温暖」 <br>LOVE&nbsp;SERIES:&nbsp;L <br>《春风来》
+						{{list[0].type}}：{{list[0].name}}<br>歌手：{{list[0].singers}} <br>
+						发行时间：{{list[0].create_time}} <br> <br>简介：{{list[0].intro}}
 					</div>
 				</div>
 				<div class="clear"></div>
 				<div class="share-down">
-					<h1>阿良良木健、洛天依 -《洛天依作品2号：L》无损音乐下载地址</h1>
-					<p>百度网盘链接:https://pan.baidu.com/s/1GIMhy_lPDzFXV7LvO41LgA提取码:f55d</p>
+					<h1>{{list[0].singers}} -《{{list[0].name}}》无损音乐下载地址</h1>
+					<p>百度网盘链接:{{list[0].down_url}}</p>
 
 					<div class="ips">
 						<input id="path" class="path" style="width: 350px;" type="text" value="https://pan.baidu.com/s/1GIMhy_lPDzFXV7LvO41LgA">
@@ -156,8 +148,32 @@
 
 			<div class="clear"></div>
 		</div>
+
 	</div>
 
+	<script type="text/javascript">
+	var v=new Vue({
+		el:"#main",
+		data:{
+			list:[],
+			listph:[],
+		},
+		created(){
+			var search = location.search; // ?page=1;
+    		// repalce  split
+    		var items = search.split(new RegExp("="));
+    		var name= items[1];
+    		
+			axios.get("xuanran.s?op=querysharedetail&name="+name+"&singers="+location.hash.substring(1))
+			.then(res=>{
+				this.list=res.data;
+			});
+			axios.post("xuanran.s?op=queryshareph").then(res=>{
+				this.listph=res.data;
+			});
+		}
+	});
+	</script>
 	<div class="footer">
 		<div class="warp">
 			Copyright 2015-2018 SQ688.com 超高无损音乐<br>本站所有数据均系网友搜集自互联网后分享,本站服务器不存储任何音乐文件,也无意侵犯您的版权,如若任何人声称是任何音乐的版权所有人,请联系sqshangwu@gmail.com,本站会尽快删除,<br>郑重声明本站旨在无损音乐交流分享,不与任何淘宝店铺或机构合作参与任何形式的获利行为,敬请网友注意谨防受骗! <br> 桂ICP备13001859号-4

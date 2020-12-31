@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.yc.Dao.IndexXuanRanDao;
+import com.yc.Dao.ShareDao;
 import com.yc.Dao.SingerTypedao;
 import com.yc.common.web.BaseServlet;
 
@@ -20,6 +21,7 @@ private static final long serialVersionUID = 1L;
 	
 	private IndexXuanRanDao id=new IndexXuanRanDao();
 	private SingerTypedao std=new SingerTypedao();
+	private ShareDao sd=new ShareDao();
 	public void queryzuixing(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		try {
 			write(response, id.Listzuixing());
@@ -86,6 +88,66 @@ private static final long serialVersionUID = 1L;
 		String category=request.getParameter("category");
 		try {
 			write(response, std.queryall(category));
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void queryshare(HttpServletRequest request,HttpServletResponse response) {
+		try {
+			write(response, id.Listshare());
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * share_item
+	 * @param request
+	 * @param response
+	 */
+	public void querysharedetail(HttpServletRequest request,HttpServletResponse response) {
+		String name=request.getParameter("name");
+		String singers=request.getParameter("singers");
+		try {
+			write(response, sd.listshare(name, singers));
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * share页
+	 * @param request
+	 * @param response
+	 */
+	public void querysharedetails(HttpServletRequest request,HttpServletResponse response) {
+		String page=request.getParameter("page");
+		int ipage=page .equals("NaN")? 1:Integer.parseInt(page);
+		try {
+			write(response, sd.listsharedetail(ipage));
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * share排行
+	 * @param request
+	 * @param response
+	 */
+	public void queryshareph(HttpServletRequest request,HttpServletResponse response) {
+		try {
+			write(response, sd.listph());
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 网友分享cnt总条数
+	 * @param request
+	 * @param response
+	 */
+	public void queryall(HttpServletRequest request,HttpServletResponse response) {
+		try {
+			write(response, sd.listall());
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}

@@ -122,6 +122,18 @@ public class IndexXuanRanDao {
 		return DBHelper.selectListMap(sql);
 	}
 	
+	
+	public List<Map<String, Object>> Listshare() throws SQLException{
+		String sql="SELECT\n" +
+				"	*\n" +
+				"FROM\n" +
+				"	sq_share\n" +
+				"LEFT JOIN sq_member ON sq_share.member = sq_member. NAME\n" +
+				"LIMIT 0,\n" +
+				" 18";
+		return DBHelper.selectListMap(sql);
+	}
+	
 	/**
 	 * 	歌手类型查询
 	 * @return
