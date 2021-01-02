@@ -34,7 +34,7 @@ public class ShareDao {
 	
 	
 	public List<Map<String, Object>> listsharedetail(int page) throws SQLException{
-		int begin=(page-1)*18;
+		int begin=(page-1)*15;
 		String sql="SELECT\n" +
 				"	*\n" +
 				"FROM\n" +
@@ -50,7 +50,7 @@ public class ShareDao {
 				"		member\n" +
 				") c ON b. NAME = c.member\n" +
 				"LIMIT ?,\n" +
-				" 18";
+				" 15";
 		DBHelper dbh=new DBHelper();
 		return dbh.selectListMap(sql,begin);
 	}
@@ -106,6 +106,12 @@ public class ShareDao {
 				") a ON b. NAME = a.member\n" +
 				"ORDER BY\n" +
 				"	cnt DESC";
+		DBHelper dbh=new DBHelper();
+		return dbh.selectListMap(sql);
+	}
+
+	public List<Map<String, Object>> listrmzy() throws SQLException{
+		String sql="select * from sq_share limit 66,12";
 		DBHelper dbh=new DBHelper();
 		return dbh.selectListMap(sql);
 	}

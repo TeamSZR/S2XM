@@ -53,13 +53,16 @@
 
 			<div class="url">
 				<span class="down_title">{{list[0].singer}} - {{list[0].name}}
-				({{list[0].size}}) {{list[0].type}} 无损音乐下载地址:</span>
-				<p class="downurl">{{list[0].down_url}}</p>
+				({{list[0].size}}) {{list[0].type}} 无损音乐下载地址:</span><br>
+				<p v-html="list[0].bofang_url" ></p>
+				<span class="downurl">{{list[0].down_url}}</span>
+				
 				<div class="ips">
 					<input id="path" class="path" style="width: 350px;" 
 					type="text" value="https://pan.baidu.com/s/18CFu079zudX2jzg9mtC4vw">
 					<button id="openurl" data-clipboard-action="copy" data-clipboard-text="yisg">打开下载连接</button>
 				</div>
+				
 				<span id="msg"></span>
 				<div class="clear"></div>
 				<span class="tips">温馨提示: 请直接点击打开下载链接,密码会自动复制</span>
@@ -107,6 +110,11 @@
 			axios.get("detail.s?op=querydownload&name="+name+"&song="+location.hash.substring(1))
 			.then(res=>{
 				this.list=res.data;
+				if(this.list.length==0){
+					alert("哎呀··！！小妹找不到相关歌曲");
+					location.href="index.html";
+				}
+				
 			});
 			axios.post("detail.s?op=querydownloadzxsl")
 			.then(res=>{

@@ -48,23 +48,7 @@
 	<div class="detail" id="main">
 		<div class="swarp">
 			<div class="slt">
-				<div class="head" style="margin-top: 20px">
-					<i class="leline"></i>热门资源
-				</div>
-				<ul class="songhot">
-					<li class="pingcap"><a href="https://www.sq688.com/share_item/355369.html">华晨宇 -《好想爱这个世界啊》</a></li>
-					<li class="pingcap"><a href="https://www.sq688.com/share_item/151097.html">珍藏人声发烧 -《2019轻音乐BMW车载HiFi至尊女声发烧天碟》</a></li>
-					<li class="pingcap"><a href="https://www.sq688.com/share_item/151096.html">私人珍藏版 -《顶级场 专业歌路 - Deep House (2K15)》</a></li>
-					<li class="pingcap"><a href="https://www.sq688.com/share_item/151090.html">周杰伦 -《《JAY》+《范特西》+《八度空间》+《叶惠美》+《寻找周杰伦》》</a></li>
-					<li class="pingcap"><a href="https://www.sq688.com/share_item/355769.html">周华健、那英、罗琦、任贤齐、蔡健雅、肖战、周深、刘宇宁等 -《我们的歌》</a></li>
-					<li class="pingcap"><a href="https://www.sq688.com/share_item/151032.html">周杰伦 -《无损专辑合集》</a></li>
-					<li class="pingcap"><a href="https://www.sq688.com/share_item/374146.html">王力宏、胡彦斌、张韶涵、苏有朋、胡海泉、韩雪 -《天赐的声音》</a></li>
-					<li class="pingcap"><a href="https://www.sq688.com/share_item/151091.html">音阙诗听 -《芒种》</a></li>
-					<li class="pingcap"><a href="https://www.sq688.com/share_item/151084.html">邓紫棋 -《一些邓紫棋的高音质(flac) 的歌曲》</a></li>
-					<li class="pingcap"><a href="https://www.sq688.com/share_item/151086.html">周杰伦 -《《JAY》+《范特西》+《八度空间》+《叶惠美》+《寻找周杰伦》》</a></li>
-					<li class="pingcap"><a href="https://www.sq688.com/share_item/296787.html">周杰伦/阿信 -《说好不哭》</a></li>
-					<li class="pingcap"><a href="https://www.sq688.com/share_item/151085.html">冯提莫 -《一些冯提莫的高音质(flac) 的歌曲》</a></li>
-				</ul>
+				
 
 				<!--排行-->
 				<div class="head" style="margin-top: 20px">
@@ -157,6 +141,7 @@
 		data:{
 			list:[],
 			listph:[],
+			listrmzy:[],
 		},
 		created(){
 			var search = location.search; // ?page=1;
@@ -170,6 +155,9 @@
 			});
 			axios.post("xuanran.s?op=queryshareph").then(res=>{
 				this.listph=res.data;
+			});
+			axios.post("xuanran.s?op=queryrmzy").then(res=>{
+				this.listrmzy=res.data;
 			});
 		}
 	});

@@ -152,4 +152,17 @@ private static final long serialVersionUID = 1L;
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * share_item页热门资源
+	 * @param request
+	 * @param response
+	 */
+	
+	public void queryrmzy(HttpServletRequest request,HttpServletResponse response) {
+		try {
+			write(response, sd.listrmzy());
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

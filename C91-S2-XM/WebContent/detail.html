@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script type='text/javascript' src='layui/layui.all.js'></script>
+<link rel="stylesheet" href="layui/css/layui.css" media="all">
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -70,8 +72,20 @@ if(/Android|webOS|iPhone|iPod|iPad|Windows Phone|BlackBerry|Mobile/i.test(naviga
 					<div id="details" class="avt">
 						<img :src="'/C91-S2-XM'+list[0].head"  class="avt ">
 						<div class="good">
-							<a href="javascript:void(0);" title="喜欢"><i class="fa fa-heart"></i> <span id="like">{{list[0].likes}}</span></a> 
+							
+							<a href="javascript:void(0);" title="喜欢">
+							<i class="fa fa-heart"></i> 
+							<span id="like">{{list[0].likes}}</span>
+							</a> 
+							
 							<a title="歌曲" class="rt"><i class="fa fa-music"></i> {{list[0].total}}</a>
+							<button @click="dz()" onclick="countClickedTimes()" type="button" class="layui-btn layui-btn-sm">{{totalzans}}
+							<i class="layui-icon">&#xe6c6;</i>
+							</button>
+	
+							<button type="button" class="layui-btn layui-btn-sm">
+							<i class="layui-icon">&#xe6c5;</i>
+							</button>
 						</div>
 					</div>
 					<div class="det">
@@ -191,7 +205,10 @@ if(/Android|webOS|iPhone|iPod|iPad|Windows Phone|BlackBerry|Mobile/i.test(naviga
 			listzjgx:[],
 			listly:[],
 			name:"",
-			content:""
+			content:"",
+			totalzan:[],
+			totalzans:0,
+			cnt:0,
 		},
 		created(){
 			 var t = this;
@@ -223,6 +240,18 @@ if(/Android|webOS|iPhone|iPod|iPad|Windows Phone|BlackBerry|Mobile/i.test(naviga
 			axios.get("detail.s?op=queryly").then(res=>{
 				this.listly=res.data;
 			});
+			axios.get("zan.s?op=getzan&singername="+location.hash.substring(1)).then(res=>{
+				if(res.data.length==0){
+					this.totalzans=0;
+					//this.totalzan[0].cnt=0
+				}else{
+					this.totalzan=res.data;
+					this.totalzans=this.totalzan[0].cnt;
+				}	
+			});
+			axios.get("zan.s?op=checkuser&singername="+location.hash.substring(1)).then(res=>{
+				this.cnt=res.data;
+			});
 			
 		},
 		methods:{
@@ -234,7 +263,28 @@ if(/Android|webOS|iPhone|iPod|iPad|Windows Phone|BlackBerry|Mobile/i.test(naviga
 					alert(res.data);
 					location.href= 'detail2.html#'+location.hash.substring(1);
 				});
-			}
+			},
+			dz(){
+				var p=new URLSearchParams();
+				p.append("name",this.list[0].name);
+				axios.post("zan.s?op=addzan",p).then(res=>{
+					//alert(res.data);
+					console.info(times);
+					 if(this.cnt==1){
+						if(times%2==0){
+							this.totalzans++;
+						}else{
+							this.totalzans--;
+						}
+					} else{
+						if(times%2==0){
+							this.totalzans--;
+						}else{
+							this.totalzans++;
+						}
+					}		 
+				});
+			},
 		}
 		
 	});
@@ -252,4 +302,28 @@ if(/Android|webOS|iPhone|iPod|iPad|Windows Phone|BlackBerry|Mobile/i.test(naviga
 	<!--页面脚本-->
 
 </body>
+
+<script type="text/javascript">
+	var times = 0;//点击次数
+	var preClickTime ;//上一次点击的时间（毫秒）
+	var currentClickTime;//当前点击时间
+	function countClickedTimes(){
+	if(times === 0){
+	preClickTime = new Date().getTime();//首次点击的时间
+	times ++;
+	return;
+	}
+	    currentClickTime = new Date().getTime();
+	//alert(currentClickTime - preClickTime);
+	if((currentClickTime - preClickTime) < 500) {//如果是1秒内重复点击
+	alert("亲，您的点击速度过快...");
+	preClickTime = currentClickTime;
+	return;
+	} 
+	preClickTime = currentClickTime;
+	times ++ ;
+
+	}
+</script>
+
 </html>

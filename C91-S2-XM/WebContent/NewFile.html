@@ -1,0 +1,34 @@
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+    <script type="text/javascript">
+    var times = 0;//点击次数
+    var preClickTime ;//上一次点击的时间（毫秒）
+    var currentClickTime;//当前点击时间
+    function countClickedTimes(){
+    if(times === 0){
+    preClickTime = new Date().getTime();//首次点击的时间
+    times ++;
+    alert("当前点击次数:"+times);
+    return;
+    }
+        currentClickTime = new Date().getTime();
+    //alert(currentClickTime - preClickTime);
+    if((currentClickTime - preClickTime) < 3000) {//如果是3秒内重复点击
+    alert("亲，您的点击速度过快...");
+    preClickTime = currentClickTime;
+    return;
+    } 
+    preClickTime = currentClickTime;
+    times ++ ;
+    alert("当前点击次数:"+times); 
+    }
+    </script>
+    </head>
+    <body> 
+    <!-- <a href="javascriptTim:countClickedes();">统计点击次数</a> -->
+   <button type="button" onclcik="countClickedes()">统计点击次数</button>
+    </body>
+    </html>

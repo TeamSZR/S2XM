@@ -14,6 +14,7 @@ import com.yc.Dao.DetailDao;
 import com.yc.Dao.DownLoadDao;
 import com.yc.Dao.LyDao;
 import com.yc.Dao.SearchDao;
+import com.yc.Dao.ZanDao;
 import com.yc.common.biz.BizException;
 import com.yc.common.web.BaseServlet;
 
@@ -115,10 +116,13 @@ public class DetailServelt  extends BaseServlet{
 		try {
 			List<Map<String, Object>> list=sd.listname(name);
 			list.addAll(sd.listsong(name));
+			list.addAll(sd.listnamepy(name));
 			write(response, list);
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}
 	}
+	
+
 	
 }
